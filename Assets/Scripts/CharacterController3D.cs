@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,25 @@ public class CharacterController3D : MonoBehaviour
     // Start is called before the first frame update
     private Rigidbody rb;
     InputMaster input;
-    public float turnSmoothTime, speed;
+    public float turnSmoothTime, speed, jumpPower;
     private float turnSmoothVelocity, angle;
     private Vector3 moveDir;
     private Transform cam;
+    public bool isGrounded = true;
+    public static CharacterController3D instance;
+    #region Setup
+    private void Awake()
+    {
+        if (!instance)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     void OnEnable()
     {
         input = new();
@@ -22,6 +38,7 @@ public class CharacterController3D : MonoBehaviour
     {
         input.Disable();
     }
+    #endregion
     void Start()
     {
         cam = CameraManager.instance.gameCam.gameObject.transform;
@@ -46,7 +63,14 @@ public class CharacterController3D : MonoBehaviour
 
         }
         transform.eulerAngles = new Vector3(0, angle, 0);
-        rb.velocity *= .9f;
+        rb.velocity = new Vector3(rb.velocity.x * .9f, rb.velocity.y * 1, rb.velocity.z * .9f);
+
+
+        if(isGrounded && input.Player.Jump.triggered)
+        {
+            rb.velocity += Vector3.up * jumpPower;
+            isGrounded = false;
+        }
 
     }
 }
