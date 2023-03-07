@@ -10,7 +10,8 @@ public class CharacterController3D : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody rb;
-    InputMaster input;
+    private InputMaster input;
+    private Animator anim;
 
     public float turnSmoothTime, speed, jumpPower;
     private float turnSmoothVelocity, angle;
@@ -50,6 +51,7 @@ public class CharacterController3D : MonoBehaviour
 
     void Start()
     {
+        anim = GetComponentInChildren<Animator>();
         walkDust = GetComponentInChildren<ParticleSystem>();
         cam = CameraManager.instance.gameCam.gameObject.transform;
         rb = GetComponent<Rigidbody>();
@@ -62,9 +64,14 @@ public class CharacterController3D : MonoBehaviour
         direction = new Vector3(input.Player.Move.ReadValue<Vector2>().x, input.Player.Jump.triggered ? 1 : 0, input.Player.Move.ReadValue<Vector2>().y);
         Movement();
         Jump();
+        Animate();
         ParticleControl();
         
 
+    }
+    void Animate()
+    {
+        anim.SetBool("Running", direction.magnitude >= 0.1f);
     }
     void Jump()
     {
