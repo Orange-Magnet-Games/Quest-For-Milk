@@ -21,4 +21,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         player.isAttacking = false;
     }
+    void Update()
+    {
+        
+    }
 }
