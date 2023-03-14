@@ -8,22 +8,29 @@ using UnityEngine.Windows;
 
 public class CharacterController3D : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //Attached Components
     private Rigidbody rb;
     private InputMaster input;
     private Animator anim;
 
+    //Movement Maths
     public float turnSmoothTime, speed, jumpPower;
     private float turnSmoothVelocity, angle;
     private Vector3 moveDir, direction;
     public bool isGrounded = true;
 
+    //Attacks
+    public bool isAttacking = false;
+    bool attackSide = false;
+
+    //Camera
     private Transform cam;
 
+    //Particle Effects
     private ParticleSystem walkDust;
 
     #region Setup
-
+    //Singletonification
     public static CharacterController3D instance;
     
     private void Awake()
@@ -57,8 +64,6 @@ public class CharacterController3D : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    
     void Update()
     {
         direction = new Vector3(input.Player.Move.ReadValue<Vector2>().x, input.Player.Jump.triggered ? 1 : 0, input.Player.Move.ReadValue<Vector2>().y);
@@ -66,21 +71,47 @@ public class CharacterController3D : MonoBehaviour
         Jump();
         Animate();
         ParticleControl();
+        Attack();
         
 
     }
+
+
     void Animate()
     {
         anim.SetBool("Running", direction.magnitude >= 0.1f);
+        anim.SetBool("IsGrounded", isGrounded);
     }
+
+
+    void Attack()
+    {
+        if(!isAttacking && input.Player.Attack.triggered)
+        {
+            isAttacking = true;
+            if (attackSide) anim.SetTrigger("AttackLeft");
+            else anim.SetTrigger("AttackRight");
+            attackSide = !attackSide;
+        }
+    }
+
+
     void Jump()
     {
         if(isGrounded && direction.y == 1)
         {
-            rb.velocity += Vector3.up * jumpPower;
-            isGrounded = false;
+            anim.SetBool("Jumping", true);
         }
     }
+
+
+    public void AnimationJump()
+    {
+        rb.velocity += Vector3.up * jumpPower;
+        isGrounded = false;
+    }
+
+
     void Movement()
     {
         if (direction.magnitude >= 0.1f)
@@ -96,6 +127,8 @@ public class CharacterController3D : MonoBehaviour
         transform.eulerAngles = new Vector3(0, angle, 0);
         rb.velocity = Drag(rb.velocity, .1f);
     }
+
+
     void ParticleControl()
     {
         if (rb.velocity.magnitude >= .1f && isGrounded) { if(!walkDust.isPlaying) walkDust.Play(); }
