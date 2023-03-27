@@ -13,10 +13,20 @@ public class GroundCheck : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Walkable") player.isGrounded = true;
+        if (other.tag == "Walkable")
+        {
+            Vector3 pos = other.transform.position;
+            pos = new Vector3(pos.x, pos.y+10, pos.z);
+            player.lastWalked = pos;
+            player.isGrounded = true;
+        }
     }
-    private void OnTriggerExit(Collider other)
+
+    void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Walkable") player.isGrounded = false;
+        if (other.tag == "Walkable")
+        {
+            player.isGrounded = false;
+        }
     }
 }

@@ -5,10 +5,12 @@ using UnityEngine;
 public class PlayerAnimationEvents : MonoBehaviour
 {
     CharacterController3D player;
+    Enemy enemy;
     Animator anim;
     private void Start()
     {
         player = CharacterController3D.instance;
+        enemy = GetComponentInParent<Enemy>();
         anim = GetComponent<Animator>();
     }
     // Start is called before the first frame update
@@ -19,7 +21,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     }
     void AttackOver()
     {
-        player.isAttacking = false;
+        if(player) player.isAttacking = false;
+        if(enemy) enemy.isAttacking = false;
     }
     void Update()
     {
