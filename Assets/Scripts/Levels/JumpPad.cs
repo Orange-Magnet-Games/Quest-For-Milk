@@ -10,12 +10,13 @@ public class JumpPad : MonoBehaviour
     {
         if (other.TryGetComponent(out CharacterController3D player))
         {
+            CameraManager.instance.soundMan.Spring(1);
             anim.Play();
             player.GetComponent<Rigidbody>().velocity = Vector3.up * jumpPower;
         }
     }
     void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent(out CharacterController3D player)) player.isGrounded = false;
+        if (other.TryGetComponent(out CharacterController3D player)) player.IsGrounded = false;
     }
 }

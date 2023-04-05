@@ -7,14 +7,16 @@ public class Enemy : MonoBehaviour
 {
     public GameObject heart;
     public bool seen, isGrounded, isAttacking;
-    private void OnDestroy()
+    public void Die()
     {
+        CameraManager.instance.soundMan.Death(1);
         if (Random.Range(0, 101) < 25)
         {
             GameObject instance = Instantiate(heart);
             instance.transform.position = transform.position;
             heart.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(0f, 5f), 5f, Random.Range(0f, 5f));
         }
+        Destroy(gameObject);
     }
 }
 public class WalkingEnemy : Enemy

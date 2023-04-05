@@ -6303,7 +6303,7 @@ Animator:
   m_GameObject: {fileID: 2666576570153060911}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e96778bf6f8c6e84cbd687d6cea270d4, type: 3}
-  m_Controller: {fileID: 9100000, guid: 4183ea4531ac2084fb29349b9cd15a26, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0380a5dd206bcde42823400c4d86ba8b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6313,7 +6313,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &3008682258473645939
+--- !u!114 &2833934220269903933
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6322,7 +6322,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2666576570153060911}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e42bc05cc67b243a5d21a146e7f60a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d5cbc287146ecf46a4d790834086306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &2964732307740334927 stripped
@@ -6468,3 +6468,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  container: {fileID: 3008682258395126820}
+  knockback: 50

@@ -17,15 +17,19 @@ public class PlayerAnimationEvents : MonoBehaviour
     void Jump() 
     { 
         player.AnimationJump();
-        anim.SetBool("Jumping", false);
+        anim.SetBool("Jumping", false); 
+        CameraManager.instance.soundMan.Jump(1);
     }
     void AttackOver()
     {
-        if(player) player.isAttacking = false;
-        if(enemy) enemy.isAttacking = false;
+        player.isAttacking = false;
     }
-    void Update()
+    public void Step()
     {
-        
+        CameraManager.instance.soundMan.Step(1);
+    }
+    public void Swing()
+    {
+        CameraManager.instance.soundMan.Swing(1);
     }
 }

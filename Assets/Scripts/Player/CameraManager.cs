@@ -16,9 +16,11 @@ public class CameraManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public Camera gameCam;
     public Camera fxCam;
+    public SoundManager soundMan;
 
 }

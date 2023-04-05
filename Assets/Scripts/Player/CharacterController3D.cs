@@ -20,8 +20,22 @@ public class CharacterController3D : MonoBehaviour
     private Vector3 moveDir; 
     [HideInInspector] public Vector3 direction;
     public Vector3 lastWalked;
-    public bool isGrounded = true;
-
+    private bool _isGrounded = true;
+    public bool IsGrounded
+    {
+        get { return _isGrounded; }
+        set
+        {
+            if (value != _isGrounded)
+            {
+                _isGrounded = value;
+                if(_isGrounded)
+                {
+                    CameraManager.instance.soundMan.Land(1);
+                }
+            }
+        }
+    }
     //Attacks
     public bool isAttacking = false;
     bool attackSide = false;
@@ -91,7 +105,7 @@ public class CharacterController3D : MonoBehaviour
     void Animate()
     {
         anim.SetBool("Running", rb.velocity.magnitude > 0.1);
-        anim.SetBool("IsGrounded", isGrounded);
+        anim.SetBool("IsGrounded", IsGrounded);
     }
 
 
@@ -109,7 +123,7 @@ public class CharacterController3D : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded && direction.y == 1)
+        if (IsGrounded && direction.y == 1)
         {
             anim.SetBool("Jumping", true);
         }
@@ -119,7 +133,7 @@ public class CharacterController3D : MonoBehaviour
     public void AnimationJump()
     {
         rb.velocity += Vector3.up * jumpPower;
-        isGrounded = false;
+        IsGrounded = false;
     }
 
 
@@ -142,7 +156,7 @@ public class CharacterController3D : MonoBehaviour
 
     void ParticleControl()
     {
-        if (rb.velocity.magnitude >= .1f && isGrounded) { if(!walkDust.isPlaying) walkDust.Play(); }
+        if (rb.velocity.magnitude >= .1f && IsGrounded) { if(!walkDust.isPlaying) walkDust.Play(); }
         else walkDust.Stop();
     }
 

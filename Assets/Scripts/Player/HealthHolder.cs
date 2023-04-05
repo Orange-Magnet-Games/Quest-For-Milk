@@ -19,7 +19,7 @@ public class HealthHolder : MonoBehaviour
             if(health <= 0)
             {
                 if (GetComponent<CharacterController3D>()) SceneManager.LoadScene(0);
-                else Destroy(gameObject);
+                if (TryGetComponent<Enemy>(out Enemy enem)) enem.Die();
             }
         }
     }
