@@ -146,11 +146,11 @@ public class CharacterController3D : MonoBehaviour
 
             moveDir = Quaternion.Euler(0, angle, 0) * Vector3.forward;
 
-            rb.velocity += new Vector3(moveDir.x * speed, 0, moveDir.z * speed);
+            rb.velocity += new Vector3(moveDir.x * speed, 0, moveDir.z * speed) * Time.deltaTime * 125;
 
         }
         transform.eulerAngles = new Vector3(0, angle, 0);
-        rb.velocity = Drag(rb.velocity, .9f);
+        rb.velocity = Drag(rb.velocity, .8f);
     }
 
 

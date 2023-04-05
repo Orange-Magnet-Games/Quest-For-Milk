@@ -48,6 +48,12 @@ public class SoundManager : MonoBehaviour
         deathSound.pitch = Random.Range(0.5f, 1.5f);
         deathSound.Play();
     }
+    public AudioSource heartSound; public void Heart(float vol)
+    {
+        heartSound.volume = vol * Volume;
+        heartSound.pitch = Random.Range(0.5f, 1.5f);
+        heartSound.Play();
+    }
 
     public AudioSource music;
     // ---------------------- VOLUME CONTROL --------------------------------

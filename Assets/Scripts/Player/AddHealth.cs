@@ -12,6 +12,7 @@ public class AddHealth : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<CharacterController3D>())
         {
+            CameraManager.instance.soundMan.Heart(1);
             collision.gameObject.GetComponent<HealthHolder>().health += 1;
             Destroy(gameObject);
         }
